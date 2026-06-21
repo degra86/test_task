@@ -23,3 +23,14 @@
 
    ./scripts/search.html - страница загрузки данных 
 
+# Требуемые библиотеки Perl
+
+HTTP::Server::Simple::CGI
+
+Cwd
+
+DBI
+
+JSON
+
+FindBin
