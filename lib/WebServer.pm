@@ -85,7 +85,10 @@ sub _GetData {
             UNION
                 SELECT int_id, created AS dt, str FROM log WHERE address = ?
             ) a
-            ORDER BY int_id, dt DESC LIMIT 101
+            ORDER BY
+                int_id, dt
+            LIMIT
+                101
         },
         Bind => [ $Param{Email}, $Param{Email} ],
     );
