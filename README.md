@@ -23,3 +23,20 @@
 
    ./scripts/search.html - страница загрузки данных 
 
+# TODO
+
+- дописать тесты
+- больше комментариев богу комментариев
+
+
+# Требуемые библиотеки Perl
+
+HTTP::Server::Simple::CGI
+
+Cwd
+
+DBI
+
+JSON
+
+FindBin
