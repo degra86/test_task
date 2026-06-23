@@ -100,7 +100,7 @@ sub _SearchForm {
     <div class="container">
         <h1>📊 Форма поиска по email</h1>
         <div id="status">🟢 Сервер запущен</div>
-        <form form action="http://localhost:8080/data" method="post">
+        <form form action="/data" method="post">
             <div class="data-box" style="display: flex; align-items: center; gap: 10px;">
                 <label for="mail"><b>E-mail:</b></label>
                 <input type="text" id="email" name="email">
@@ -174,7 +174,7 @@ HTML
             <input type="Hidden" name="email" value="$Email"/>
             <div style="margin: 20px 0;">
                 <button onclick="history.back()">↩️ Вернуться</button>
-                <button type="submit" formaction="http://localhost:8080/json">📥 Скачать JSON</button>
+                <button type="submit" formaction="/json">📥 Скачать JSON</button>
             </div>
             <div class="data-box" style="display: flex; align-items: center; gap: 10px;">
                 <div class="data-display">
