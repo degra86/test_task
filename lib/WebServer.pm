@@ -58,7 +58,7 @@ sub handle_request {
 my $HTMLStyles = <<'HTML';
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; background: #f0f0f0; }
-        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; }
+        .container { max-width: 875px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; }
         .data-box { background: #e8f4f8; padding: 15px; margin: 10px 0; border-radius: 5px; }
         .data-display { background: #bbbbbb; color: #d4d4d4; padding: 15px; border-radius: 5px; font-family: monospace; }
         #status { color: #28a745; margin: 10px 0; }
@@ -67,7 +67,7 @@ my $HTMLStyles = <<'HTML';
         table {
             border-collapse: collapse;
             width: 100%;
-            max-width: 600px;
+            max-width: 700px;
             margin: 20px auto;
             font-family: Arial, sans-serif;
         }
