@@ -18,10 +18,10 @@
 
 # Запуск
 
-1. perl ./scripts/load_data.pl  - запуск загрузки данных
+1. perl ./scripts/load_data.pl    - запуск загрузки данных
 2. perl ./scripts/start_server.pl - запуск простого веб-сервиса
 
-   ./scripts/search.html - страница загрузки данных 
+      Форма поиска данных доступна по адресу http://localhost:8080/
 
 # TODO
 
@@ -32,6 +32,8 @@
 # Требуемые библиотеки Perl
 
 HTTP::Server::Simple::CGI
+
+HTML::Entities
 
 Cwd
 

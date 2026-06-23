@@ -1,6 +1,8 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+use utf8;
+use open qw(:std :encoding(UTF-8));
 
 use Cwd;
 
