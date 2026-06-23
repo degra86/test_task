@@ -15,6 +15,8 @@ $SQLHelperObject->Do(SQL => 'TRUNCATE TABLE log');
 
 open FILE, "$Bin/../data/out" or die "Ошибка открытия файла: $!";
 
+my $LogFile = '$Bin/../logs/log.err';
+
 # my $RegExEmail = qr{[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,6}};
 
 my $Statistics = { LineNumber => 0, MessageCnt => 0, LogCnt => 0 };
@@ -26,7 +28,7 @@ while (my $Line = <FILE>) {
 
     my $LineData = {};
     unless ($Line =~ s/^(\d{4}\-\d{2}\-\d{2}\s\d{2}:\d{2}:\d{2}) //i) {
-        print "Line $Statistics->{LineNumber}: incorrect field format dt\n";
+        LogMessage('incorrect field format dt');
         next;
     }
 
@@ -34,19 +36,19 @@ while (my $Line = <FILE>) {
     $LineData->{String} = $Line;
 
     unless ($Line =~ s/^([\w\d]{6}\-[\w\d]{6}-[\w\d]{2}) //i) {
-        print "Line $Statistics->{LineNumber}: incorrect field format int_id\n";
+        LogMessage('incorrect field format int_id');
         next;
     }
     $LineData->{IntID} = $1;
 
     if ($Line =~ s/^<= //) {
         unless ($Line =~ /\bid=([^\s]+)/) {
-            print "Line $Statistics->{LineNumber}: incorrect field format id\n";
+            LogMessage('incorrect field format id');
             next;
         }
         $LineData->{ID} = $1;
         if ($IDs{$LineData->{ID}}) {
-            print "Line $Statistics->{LineNumber}: the value of the id field ($LineData->{ID}) is not unique\n";
+            LogMessage(" the value of the id field ($LineData->{ID}) is not unique");;
             next;
         }
         $IDs{$LineData->{ID}} = 1;
@@ -77,7 +79,7 @@ while (my $Line = <FILE>) {
 
     }
     unless ($SQLResult) {
-        print "Line $Statistics->{LineNumber}: Query execution error \n";
+        LogMessage('Query execution error');
         next;
     }
 }
@@ -88,5 +90,24 @@ print qq{
         $Statistics->{MessageCnt} message records,
         $Statistics->{LogCnt} log records.\n
 }; 
+
+
+sub LogMessage {
+
+    my ($Message) = @_;
+    my $Timestamp = localtime();
+    my $LogEntry = "[$Timestamp] Строка $Statistics->{LineNumber}: $Message\n";
+
+    if (!-e $LogFile) {
+        open(my $FH, '>', $LogFile) or die "Не могу создать $LogFile: $!";
+        print $FH $LogEntry;
+        close($FH);
+    } else {
+        open(my $FH, '>>', $LogFile) or die "Не могу открыть $LogFile: $!";
+        print $FH $LogEntry;
+        close($FH);
+    }
+
+}
 
 1;
