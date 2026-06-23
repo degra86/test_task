@@ -5,9 +5,8 @@ use warnings;
 use utf8;
 use open qw(:std :encoding(UTF-8));
 
-use Cwd;
 use DBI;
-
+use FindBin qw($Bin);
 
 =encoding utf8
 
@@ -41,10 +40,9 @@ sub new {
 sub _GetConfig {
 
     my ( $Self ) = @_;
-    my $Config = {}; 
+    my $Config = {};
 
-    my $Dir = getcwd;
-    open ENV_FILE, $Dir . "/../.env" or die "Ошибка открытия файла: $!";
+    open ENV_FILE, "$Bin/../.env" or die "Ошибка открытия файла: $!";
 
     while (my $Line = <ENV_FILE>) {
         if ( $Line && $Line =~ /^(\w+)=(.+)$/ ) {

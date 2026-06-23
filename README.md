@@ -35,8 +35,6 @@ HTTP::Server::Simple::CGI
 
 HTML::Entities
 
-Cwd
-
 DBI
 
 JSON

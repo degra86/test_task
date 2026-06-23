@@ -12,7 +12,7 @@ use JSON;
 use HTML::Entities;
 
 use FindBin qw($Bin);
-use lib $Bin;
+use lib "$Bin/../lib";
 use SQLHelper;
 
 =encoding utf8

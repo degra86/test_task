@@ -4,8 +4,6 @@ use warnings;
 use utf8;
 use open qw(:std :encoding(UTF-8));
 
-use Cwd;
-
 use FindBin qw($Bin);
 use lib "$Bin/../lib";
 use SQLHelper;
@@ -15,8 +13,7 @@ my $SQLHelperObject = SQLHelper->new();
 $SQLHelperObject->Do(SQL => 'TRUNCATE TABLE message');
 $SQLHelperObject->Do(SQL => 'TRUNCATE TABLE log');
 
-my $dir = getcwd;
-open FILE, $dir . "/../data/out" or die "Ошибка открытия файла: $!";
+open FILE, "$Bin/../data/out" or die "Ошибка открытия файла: $!";
 
 # my $RegExEmail = qr{[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,6}};
 
