@@ -21,6 +21,7 @@ open FILE, $dir . "/../data/out" or die "Ошибка открытия файл�
 # my $RegExEmail = qr{[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,6}};
 
 my $Statistics = { LineNumber => 0, MessageCnt => 0, LogCnt => 0 };
+my %IDs;
 
 while (my $Line = <FILE>) {
     $Statistics->{LineNumber}++;
@@ -47,6 +48,11 @@ while (my $Line = <FILE>) {
             next;
         }
         $LineData->{ID} = $1;
+        if ($IDs{$LineData->{ID}}) {
+            print "Line $Statistics->{LineNumber}: the value of the id field ($LineData->{ID}) is not unique\n";
+            next;
+        }
+        $IDs{$LineData->{ID}} = 1;
         $LineData->{IsMessage} = 1;
     } elsif ($Line =~ /([A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,6})/i) {
         $LineData->{Address} = $1;
