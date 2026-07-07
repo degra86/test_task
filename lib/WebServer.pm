@@ -79,7 +79,6 @@ my $HTMLStyles = <<'HTML';
         th { background-color: #4CAF50; color: white; }
         tr:nth-child(even) { background-color: #f2f2f2; }
         tr:hover { background-color: #ddd; }
-
     </style>
 HTML
 
@@ -218,6 +217,11 @@ sub _GetData {
         return;
     }
 
+    my $SearchEmailTerm;
+    my $Escaped = $Param{Email};
+    $Escaped =~ s/([\\%_])/\\$1/g;
+    $SearchEmailTerm = '%<= ' . lc($Escaped) . ' %'; # исходя из содержимого файла
+
     my $SQLHelperObject = SQLHelper->new();
 
     # поиск по точному совпадению
@@ -233,11 +237,31 @@ sub _GetData {
             LIMIT
                 101
         },
-        Bind => [ 
-            '%<= ' . $Param{Email} . ' %', # исходя из содержимого файла
-            $Param{Email}
-        ],
+        Bind => [ $SearchEmailTerm, $Param{Email} ],
     );
+
+    # my $Result0 = $SQLHelperObject->SelectAll(
+    #     SQL => qq{
+    #             SELECT int_id, created AS dt, str FROM message WHERE str LIKE ?
+    #     },
+    #     Bind => [ 
+    #         '%<= ' . $Param{Email} . ' %', # исходя из содержимого файла
+    #     ],
+    # );
+
+    # my $Result1 = $SQLHelperObject->SelectAll(
+    #     SQL => qq{
+    #             SELECT int_id, created AS dt, str FROM log WHERE address = ?
+    #     },
+    #     Bind => [ 
+    #         $Param{Email}
+    #     ],
+    # );
+
+    # my $Result2 = [sort { $a->{int_id} cmp $b->{int_id} && $a->{dt} cmp $b->{dt} } (@$Result0, $Result1)];
+
+    # $Result = @$Result2[0..99];
+
 
     return $Result;
 }
